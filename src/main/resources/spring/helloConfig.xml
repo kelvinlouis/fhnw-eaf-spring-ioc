@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:application.properties" />
+
     <bean id="renderer" class="ch.fhnw.edu.eaf.springioc.message.StandardOutRenderer">
-        <property name="messageProvider" ref="provider"/>
+        <property name="messageProvider" ref="providerExplicit"/>
     </bean>
-    <bean id="provider" class="ch.fhnw.edu.eaf.springioc.message.HelloWorldProvider" />
+
+    <bean id="providerHello" class="ch.fhnw.edu.eaf.springioc.message.HelloWorldProvider" />
+
+    <bean id="providerWillkommen" class="ch.fhnw.edu.eaf.springioc.message.WillkommenProvider" />
+
+    <bean id="providerExplicit" class="ch.fhnw.edu.eaf.springioc.message.ExternalizedConstructorHelloWorldMessageProvider">
+        <constructor-arg name="message" value="${hello.message}" />
+    </bean>
 </beans>
